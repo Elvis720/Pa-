@@ -3,7 +3,7 @@ void add_SF(uint32_t res){
 	cpu.eflags.SF = sign(res);
 }
 void add_ZF(uint32_t res){
-	cpu.eflags.ZF = res == 0;
+	cpu.eflags.ZF =( res == 0);
 }
 
 void add_OF(uint32_t res,uint32_t dest,uint32_t src,size_t data_size){
