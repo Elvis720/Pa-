@@ -51,7 +51,10 @@ void add_PF(uint32_t res){
 	{
 	case 0x0:
 	case 0x3:
+	case 0x5:
 	case 0x6:
+	case 0x9:
+	case 0xa:
 	case 0xc:
 	case 0xf:
  		even = 1;//偶数
@@ -64,7 +67,10 @@ void add_PF(uint32_t res){
 	{
 	case 0x0:
 	case 0x3:
+	case 0x5:
 	case 0x6:
+	case 0x9:
+	case 0xa:
 	case 0xc:
 	case 0xf:
 		if(even == 1){
