@@ -81,7 +81,7 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_add(src, dest, data_size);
 #else
 	uint32_t res = src +dest;
-        add_SF(res);
+        add_SF(res,data_size);
 	add_OF(res,dest,src,data_size);
 	add_ZF(res,data_size);	
 	add_PF(res);
