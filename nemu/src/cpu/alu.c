@@ -27,7 +27,7 @@ void add_OF(uint32_t res,uint32_t dest,uint32_t src,size_t data_size){
 	}
 	if(sign(src) == sign(dest)){
 		if(sign(res) != sign(dest)){
-	 		cpu.elfags.OF = 1;
+	 		cpu.eflags.OF = 1;
 		}
 		else{
 			cpu.eflags.OF = 0;	
@@ -65,7 +65,7 @@ void add_PF(uint32_t res){
 	case 0xc:
 	case 0xf:
 		if(even == 1){
-			cpu.elfags.PF = 1;
+			cpu.eflags.PF = 1;
 		}
 		else{
 			cpu.eflags.PF = 0;
