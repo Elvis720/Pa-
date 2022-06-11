@@ -1,6 +1,6 @@
 #include "cpu/cpu.h"
 void add_SF(uint32_t res,size_t data_size){
-	res = sign_ext(res & (0xFFFFFFFF >>( 32 -data_size)),data_siz);
+	res = sign_ext(res & (0xFFFFFFFF >>( 32 -data_size)),data_size);
 	cpu.eflags.SF = sign(res);
 }
 void add_ZF(uint32_t res,size_t data_size){
