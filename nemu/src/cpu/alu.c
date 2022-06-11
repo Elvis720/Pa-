@@ -57,6 +57,7 @@ void add_PF(uint32_t res){
 	default:
 		even = 0;//奇数
 		break;
+	}
 	switch((res >> 4) &0xf)
 	{
 	case 0x0:
@@ -78,7 +79,7 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_add(src, dest, data_size);
 #else
 	uint32_t res = src +dest;
-        add_SF(res,data_size);
+        add_SF(res);
 	add_OF(res,dest,src,data_size);
 	add_ZF(res);	
 	add_PF(res);
