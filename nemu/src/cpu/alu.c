@@ -79,6 +79,7 @@ void add_PF(uint32_t res){
 		else{
 			cpu.eflags.PF = 0;
 		}
+		break;
 	default:
 		if(even == 1){
 			cpu.eflags.PF = 0;
@@ -86,6 +87,7 @@ void add_PF(uint32_t res){
 		else{
 			cpu.eflags.PF = 1;
 		}
+		break;
 	}
 }
 uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
