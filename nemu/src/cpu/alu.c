@@ -2,7 +2,8 @@
 void add_SF(uint32_t res){
 	cpu.eflags.SF = sign(res);
 }
-void add_ZF(uint32_t res){
+void add_ZF(uint32_t res,size_t data_size){
+	res = sign_ext(res,data_size);
 	cpu.eflags.ZF =( res == 0);
 }
 
@@ -81,7 +82,7 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 	uint32_t res = src +dest;
         add_SF(res);
 	add_OF(res,dest,src,data_size);
-	add_ZF(res);	
+	add_ZF(res,data_size);	
 	add_PF(res);
 	add_CF(res,src,data_size);
 //	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
