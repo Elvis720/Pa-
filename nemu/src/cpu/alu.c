@@ -101,7 +101,7 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 	all_ZF(res,data_size);	
 	all_PF(res);
 	add_CF(res,src,data_size);
-//	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
+//	rintf("\e[0;31mPlease implement me at alu.c\e[0m\n");
 //	fflush(stdout);
 //	assert(0);
 	return res & ( 0xFFFFFFFF >> (32 - data_size));
@@ -113,10 +113,17 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_adc(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+//	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
+// 	fflush(stdout);
+//	assert(0);
+	uint32_t res = src + dest + cpu.eflags.CF;	
+       	all_SF(res,data_size);
+	all_OF(res,dest,src,data_size);
+	all_ZF(res,data_size);	
+	all_PF(res);
+	add_CF(res,src,data_size);
+//	
+	return res & (0xFFFFFFFF >> (32 - data_size));
 #endif
 }
 
