@@ -198,7 +198,7 @@ void sbb_CF(uint32_t dest,uint32_t src,size_t data_size){
 	dest = sign_ext(dest,data_size);
 	src = sign_ext(src,data_size);
 	if(cpu.eflags.CF  == 1){
-	cpu.eflags.CF =( dest-1) < src;
+	cpu.eflags.CF = dest <= src;
 	}
 	else{
 	cpu.eflags.CF = dest < src;
