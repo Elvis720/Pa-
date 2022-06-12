@@ -171,6 +171,9 @@ void sb_OF(uint32_t res,uint32_t dest,uint32_t src,size_t data_size){
 		cpu.eflags.OF = 0;
 	}
 }
+void sub_CF(uint32_t dest,uint32_t src){
+	cpu.eflags.CF = dest < src;
+}
 
 uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 {
@@ -179,10 +182,10 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 #else
 	uint32_t res = dest - src;
 	all_SF(res,data_size);
-	sb_OF(res,dest,src,data_size);
 	all_ZF(res,data_size);	
 	all_PF(res);
-	
+	sub_CF(dest,src);
+	sb_Of(uint32_t res,uint32_t dest,uint32_t src,size_t data_size);
 //	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
 //	fflush(stdout);
 //	assert(0);
