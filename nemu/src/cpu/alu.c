@@ -171,7 +171,7 @@ void sb_OF(uint32_t res,uint32_t dest,uint32_t src,size_t data_size){
 		cpu.eflags.OF = 0;
 	}
 }
-void sb_CF(uint32_t dest,uint32_t src,size_t data_size){
+void sub_CF(uint32_t dest,uint32_t src,size_t data_size){
 	dest = sign_ext(dest,data_size);
 	src = sign_ext(src,data_size);
 	cpu.eflags.CF = dest < src;
@@ -186,7 +186,7 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 	all_SF(res,data_size);
 	all_ZF(res,data_size);	
 	all_PF(res);
-	sb_CF(dest,src,data_size);
+	sub_CF(dest,src,data_size);
 	sb_OF( res,dest,src,data_size);
 //	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
 //	fflush(stdout);
@@ -194,15 +194,32 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 	return res & (0xFFFFFFFF >> (32 - data_size));
 #endif
 }
+void sbb_CF(uint32_t dest,uint32_t src,size_t data_size){
+	dest = sign_ext(dest,data_size);
+	src = sign_ext(src,data_size);
+	if(cpu.eflags.CF = 1){
+	cpu.eflags.CF =( dest-1) < src;
+	}
+	else(
+	cpu.eflags.CF = dest < src;
+	}
+}
 
 uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sbb(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
+	uint32_t res = dest - src;
+	all_SF(res,data_size);
+	all_ZF(res,data_size);	
+	all_PF(res);
+	sub_CF(dest,src,data_size);
+	sbb_OF( res,dest,src,data_size);
+
+//	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
+//	fflush(stdout);
+//	assert(0);
 	return 0;
 #endif
 }
