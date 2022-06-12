@@ -1,14 +1,14 @@
 #include "cpu/cpu.h"
-void add_SF(uint32_t res,size_t data_size){
+void all_SF(uint32_t res,size_t data_size){
 	res = sign_ext(res & (0xFFFFFFFF >>( 32 -data_size)),data_size);
 	cpu.eflags.SF = sign(res);
 }
-void add_ZF(uint32_t res,size_t data_size){
+void all_ZF(uint32_t res,size_t data_size){
 	res = res & (0xFFFFFFFF >> (32 -data_size));
 	cpu.eflags.ZF =( res == 0);
 }
 
-void add_OF(uint32_t res,uint32_t dest,uint32_t src,size_t data_size){
+void all_OF(uint32_t res,uint32_t dest,uint32_t src,size_t data_size){
 	switch(data_size)
 	{
 		case 8:
@@ -45,7 +45,7 @@ void add_CF(uint32_t res,uint32_t src,size_t data_size){
 	src = sign_ext(src,data_size);
 	cpu.eflags.CF = res < src;
 }
-void add_PF(uint32_t res){
+void all_PF(uint32_t res){
 	int even = 0;
 	switch(res & 0xf)
 	{
@@ -96,10 +96,10 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_add(src, dest, data_size);
 #else
 	uint32_t res = src +dest;
-        add_SF(res,data_size);
-	add_OF(res,dest,src,data_size);
-	add_ZF(res,data_size);	
-	add_PF(res);
+        all_SF(res,data_size);
+	all_OF(res,dest,src,data_size);
+	all_ZF(res,data_size);	
+	all_PF(res);
 	add_CF(res,src,data_size);
 //	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
 //	fflush(stdout);
