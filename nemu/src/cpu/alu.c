@@ -171,7 +171,7 @@ void sb_OF(uint32_t res,uint32_t dest,uint32_t src,size_t data_size){
 		cpu.eflags.OF = 0;
 	}
 }
-void sub_CF(uint32_t dest,uint32_t src){
+void sb_CF(uint32_t dest,uint32_t src){
 	cpu.eflags.CF = dest < src;
 }
 
