@@ -8,7 +8,7 @@ void all_ZF(uint32_t res,size_t data_size){
 	cpu.eflags.ZF =( res == 0);
 }
 
-void all_OF(uint32_t res,uint32_t dest,uint32_t src,size_t data_size){
+void ad_OF(uint32_t res,uint32_t dest,uint32_t src,size_t data_size){
 	switch(data_size)
 	{
 		case 8:
@@ -99,7 +99,7 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 #else
 	uint32_t res = src +dest;
         all_SF(res,data_size);
-	all_OF(res,dest,src,data_size);
+	ad_OF(res,dest,src,data_size);
 	all_ZF(res,data_size);	
 	all_PF(res);
 	add_CF(res,src,data_size);
@@ -114,10 +114,10 @@ void adc_CF(uint32_t res,uint32_t src,size_t data_size){
 	src = src & (0xFFFFFFFF >> (32 - data_size));
 	res = sign_ext(res,data_size);
 	src = sign_ext(src ,data_size);
-	if(cpu.eflags.CF == 1){
+	if(cpu.eflags.CF == 1){//存在进位
 		cpu.eflags.CF = res <= src;
 	}
-	else{
+	else{//不存在进位加入运算
 		cpu.eflags.CF = res < src;
 	}
 }
@@ -131,7 +131,7 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 //	assert(0);
 	uint32_t res = src + dest + cpu.eflags.CF;	
        	all_SF(res,data_size);
-	all_OF(res,dest,src,data_size);
+	ad_OF(res,dest,src,data_size);
 	all_ZF(res,data_size);	
 	all_PF(res);
 	adc_CF(res,src,data_size);
@@ -140,15 +140,53 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 #endif
 }
 
+void sb_OF(uint32_t res,uint32_t dest,uint32_t src,size_t data_size){
+	switch(data_size)
+	{
+		case 8:
+			res = sign_ext(res,data_size);
+			dest = sign_ext(dest,data_size);
+			src = sign_ext(src,data_size);
+			break;
+		case 16:
+			res = sign_ext(res,data_size);
+			dest = sign_ext(dest,data_size);
+			src = sign_ext(src,data_size);
+			break;
+		case 32:
+			res = sign_ext(res,data_size);
+			dest = sign_ext(dest,data_size);
+			src = sign_ext(src,data_size);
+			break;
+	}
+	if(sign(src) != sign(dest)){
+		if(sign(res) != sign(dest)){
+	 		cpu.eflags.OF = 1;
+		}
+		else{
+			cpu.eflags.OF = 0;	
+		}
+	}
+	else{
+		cpu.eflags.OF = 0;
+	}
+}
+
 uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sub(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	uint32_t res = dest - src;
+	all_SF(res,data_size);
+	sb_OF(res,dest,src,data_size);
+	all_ZF(res,data_size);	
+	all_PF(res);
+	
+//	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
+//	fflush(stdout);
+//	assert(0);
+	return res & (0xFFFFFFFF >> (32 - data_sieze));
 #endif
 }
 
