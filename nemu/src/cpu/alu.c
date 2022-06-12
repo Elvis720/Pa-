@@ -109,7 +109,13 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 	return res & ( 0xFFFFFFFF >> (32 - data_size));
 #endif
 }
-
+void adc_CF(uint32_t res,uint32_t src,size_t data_size){
+	res = res & (0xFFFFFFFF >> (32 - data_size));
+	src = src & (0xFFFFFFFF >> (32 - data_size));
+	res = sign_ext(res,data_size);
+	src = sign_ext(src ,data_size);
+	cpu.eflags.CF = res <= src;
+}
 uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
@@ -123,7 +129,7 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 	all_OF(res,dest,src,data_size);
 	all_ZF(res,data_size);	
 	all_PF(res);
-	add_CF(res,src,data_size);
+	adc_CF(res,src,data_size);
 //	
 	return res & (0xFFFFFFFF >> (32 - data_size));
 #endif
