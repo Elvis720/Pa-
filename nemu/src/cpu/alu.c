@@ -114,7 +114,12 @@ void adc_CF(uint32_t res,uint32_t src,size_t data_size){
 	src = src & (0xFFFFFFFF >> (32 - data_size));
 	res = sign_ext(res,data_size);
 	src = sign_ext(src ,data_size);
-	cpu.eflags.CF = res <= src;
+	if(cpu.eflags.CF == 1){
+		cpu.eflags.CF = res <= src;
+	}
+	else{
+		cpu.eflads.CF = res < src;
+	}
 }
 uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 {
