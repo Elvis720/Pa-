@@ -41,8 +41,7 @@ void all_OF(uint32_t res,uint32_t dest,uint32_t src,size_t data_size){
 }
 
 void add_CF(uint32_t res,uint32_t src,size_t data_size){
-	res = sign_ext(res,data_size);
-	src = sign_ext(src,data_size);
+	res = res & (0xFFFFFFFF >> (32 - data_size));
 	cpu.eflags.CF = res < src;
 }
 void all_PF(uint32_t res){
