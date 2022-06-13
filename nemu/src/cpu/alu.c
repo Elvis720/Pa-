@@ -306,7 +306,7 @@ uint32_t alu_and(uint32_t src, uint32_t dest, size_t data_size)
 //	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
 //	fflush(stdout);
 //	assert(0);
-	uint32_t res = dest | src;
+	uint32_t res = dest & src;
 	all_PF(res);
 	all_ZF(res,data_size);
 	all_SF(res,data_size);
