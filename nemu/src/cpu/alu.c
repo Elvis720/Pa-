@@ -354,7 +354,10 @@ void shl_OF(uint32_t res,size_t data_size){
 	res = res & (0xFFFFFFFF << data_size);
 	cpu.eflags.OF = res != 0;
 }
-
+void shl_CF(uint32_t res,size_t data_size){
+	res = res & (0xFFFFFFFF << data_size);
+	cpu.eflags.CF = res != 0;
+}
 uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
@@ -368,6 +371,7 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 	all_SF(res,data_size);
 	all_PF(res);
 	shl_OF(res,data_size);
+	shl_CF(res,data_size);
 	return res & (0xFFFFFFFF >> (32 -data_size));
 #endif
 }
