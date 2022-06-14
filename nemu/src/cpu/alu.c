@@ -440,6 +440,7 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	all_PF(res);
 	sar_CF(dest,src,data_size);	
 	sar_OF();
+	res = res & (0xFFFFFFFF >> (32 - data_size));
 	return res;
 #endif
 }
