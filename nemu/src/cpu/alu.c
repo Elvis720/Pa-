@@ -434,7 +434,7 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	dest = dest & (0xFFFFFFFF >> (32 - data_size));
 	dest = sign_ext(dest,data_size);
 //	int sg = sign(dest,data_size);
-	int res = dest >> src;
+	int32_t res = dest >> src;
 	all_ZF(res,data_size);
 	all_SF(res,data_size);
 	all_PF(res);
