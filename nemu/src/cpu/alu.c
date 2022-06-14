@@ -380,6 +380,7 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 	all_PF(res);
 	shl_OF(res,data_size);
 	shl_CF(dest,src,data_size);
+
 	return res & (0xFFFFFFFF >> (32 -data_size));
 #endif
 }
@@ -452,7 +453,9 @@ uint32_t alu_sal(uint32_t src, uint32_t dest, size_t data_size)
 	all_ZF(res,data_size);
 	all_SF(res,data_size);
 	all_PF(res);
-	sal_OCF(dest,src,data_size);
+//	sal_OCF(dest,src,data_size);
+	shl_OF(res,data_size);
+	shl_CF(dest,src,data_size);
 
 	return res;
 #endif
