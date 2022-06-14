@@ -364,8 +364,8 @@ void shl_CF(uint32_t dest,uint32_t src,size_t data_size){
 	if(index < 0) {
 		cpu.eflags.CF = 0;
 	}
-	dest >> index;
-	dest & 0x1;
+	dest = dest >> index;
+	dest = dest & 0x1;
 	cpu.eflags.CF = dest;	
 }
 uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
@@ -381,7 +381,7 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 	all_SF(res,data_size);
 	all_PF(res);
 	shl_OF(res,data_size);
-	shl_CF(res,data_size);
+	shl_CF(dest,src,data_size);
 	return res & (0xFFFFFFFF >> (32 -data_size));
 #endif
 }
