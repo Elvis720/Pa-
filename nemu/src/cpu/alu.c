@@ -428,11 +428,14 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 }
 
 void sal_OCF(uint32_t dest,uint32_t src,size_t data_size){
-	dest =	dest << (data_size -1);
+	dest =	dest <<( data_size - 1);
+	if(src == 0 || src >data_size){
+		cpu.eflags.CF = 0;
+	}
 	dest = dest & (0xFFFFFFFF >> (32 - data_size));
 	dest = sign_ext(dest,data_size);
-	cpu.eflags.CF = sign(dest);
-	if(data_size > 1){
+	cpu.eflags.CF = sign(dest);//最高数值位移进CF
+	if(src <= 1){
 		cpu.eflags.OF = sign(dest);
 	}	
 }
