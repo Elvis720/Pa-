@@ -409,7 +409,7 @@ uint32_t alu_shr(uint32_t src, uint32_t dest, size_t data_size)
 	all_ZF(res,data_size);
 	all_SF(res,data_size);
 	all_PF(res);
-	shr_OF(res,data_size);
+	shr_OF(dest,src,data_size);
 	shr_CF(dest,src,data_size);
 	return res;
 #endif
