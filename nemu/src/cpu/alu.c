@@ -420,7 +420,7 @@ void sar_CF(int dest,uint32_t src,size_t data_size){
 	dest = dest >> (src - 1);
 	cpu.eflags.CF = dest & 0x1;
 }
-void sar_OF(int dest,uint32_t src ,size_t data_size){
+void sar_OF(){
 	cpu.eflags.OF = 0;
 }
 uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
@@ -431,16 +431,16 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 //	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
 //	fflush(stdout);
 //	assert(0);
-	dest = dest & (0xFFFFFFFF >> (32 - data_size);
+	dest = dest & (0xFFFFFFFF >> (32 - data_size));
 	dest = sign_ext(dest,data_size);
 	int sg = sign(dest,data_size);
-	res = dest >> src;
+	int res = dest >> src;
 	all_ZF(res,data_size);
 	all_SF(res,data_size);
 	all_PF(res);
 	sar_CF(dest,src,data_size);	
-	uint32_t res;
-	return 0;
+	sar_OF();
+	return res;
 #endif
 }
 
