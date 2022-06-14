@@ -429,7 +429,7 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 }
 
 void sal_OCF(uint32_t dest,uint32_t src,size_t data_size){
-	dest =	dest <<( data_size - 1);
+	dest =	dest <<( src - 1);
 	if(src == 0 || src >data_size){
 		cpu.eflags.CF = 0;
 	}
@@ -453,9 +453,9 @@ uint32_t alu_sal(uint32_t src, uint32_t dest, size_t data_size)
 	all_ZF(res,data_size);
 	all_SF(res,data_size);
 	all_PF(res);
-//	sal_OCF(dest,src,data_size);
-	shl_OF(res,data_size);
-	shl_CF(dest,src,data_size);
+	sal_OCF(dest,src,data_size);
+//	shl_OF(res,data_size);
+//	shl_CF(dest,src,data_size);
 
 	return res;
 #endif
