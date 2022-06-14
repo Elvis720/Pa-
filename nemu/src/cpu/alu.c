@@ -362,7 +362,7 @@ void shl_CF(uint32_t dest,uint32_t src,size_t data_size){
 	if(src >= data_size) {
 		cpu.eflags.CF = 0;
 	}
-	dest = dest >> src -1;
+	dest = dest >>( src -1);
 	dest = sign_ext(dest,data_size);
 	cpu.eflags.CF = sign(dest);	
 }
