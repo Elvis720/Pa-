@@ -359,14 +359,12 @@ void shl_CF(uint32_t dest,uint32_t src,size_t data_size){
 	if(src == 0){
 		cpu.eflags.CF = 0;
 	}
-
-	int index = data_size + 1 - src;
-	if(index < 0) {
+	if(src >= data_size) {
 		cpu.eflags.CF = 0;
 	}
-	dest = dest >> index;
-	dest = dest & 0x1;
-	cpu.eflags.CF = dest;	
+	dest = dest >> src -1;
+	dest = sign_ext(dest,data_size);
+	cpu.eflags.CF = sign(dest);	
 }
 uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 {
