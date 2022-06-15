@@ -224,15 +224,34 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 #endif
 }
 
+void mul_eflags(uint64_t res,size_t data_size){
+	res = res >> data_size;
+	cpu.eflags.OF = res != 0;
+	cpu.eflags.CF = res != 0;
+
+}
+
 uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
 	return __ref_alu_mul(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+//	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
+//	fflush(stdout);
+//	assert(0);
+	switch(data_size)
+	{
+	case 8:
+		uint16_t res = src * dest;
+		break;
+	case 16:
+		uint32_t res = src * dest;
+		break;
+	case 32:
+		uint64_t res = src * dest;
+		break;
+	}
+	return res;
 #endif
 }
 
