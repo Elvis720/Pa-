@@ -239,6 +239,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 //	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
 //	fflush(stdout);
 //	assert(0);
+	src =(uint64_t) src;
 	uint64_t res = src * dest;
 //	switch(data_size)
 //	{
