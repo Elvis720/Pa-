@@ -246,10 +246,10 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 		res =(uint16_t)res;
 		break;
 	case 16:
-		res = (uint32_t)res
+		res = (uint32_t)res;
 		break;
 	case 32:
-		res = (uint64)res;
+		res = (uint64_t)res;
 		break;
 	}
 	return res;
