@@ -258,7 +258,8 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 #endif
 }
 void imul_eflags(int64_t res,size_t data_size){
-	uint64_t mask = 1;
+	uint64_t mask;
+	mask = 1;
 	mask << data_size;
 	mask<< (data_size-1);
 	mask = ~mask;
