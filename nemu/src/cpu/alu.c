@@ -240,18 +240,19 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 //	fflush(stdout);
 //	assert(0);
 	uint64_t res = src * dest;
-	switch(data_size)
-	{
-	case 8:
-		res =(uint16_t)res;
-		break;
-	case 16:
-		res = (uint32_t)res;
-		break;
-	case 32:
-		res = (uint64_t)res;
-		break;
-	}
+//	switch(data_size)
+//	{
+//	case 8:
+//		res =(uint16_t)res;
+//		break;
+//	case 16:
+//		res = (uint32_t)res;
+//		break;
+//	default:
+//		res = (uint64_t)res;
+//		break;
+//	}
+	mul_eflags(res,data_size);
 	return res;
 #endif
 }
