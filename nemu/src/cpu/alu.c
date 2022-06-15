@@ -281,9 +281,9 @@ uint32_t alu_div(uint64_t src, uint64_t dest, size_t data_size)
 //	assert(0);
 	if(src == 0){
 		printf("遇到0了");
-		return;
+		return 0;
 	}
-	uint64_t res = dest /src;
+	uint32_t res = dest /src;
 	return res;
 #endif
 }
