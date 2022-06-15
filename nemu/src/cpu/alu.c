@@ -257,16 +257,28 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 	return res;
 #endif
 }
-
+void imul_eflags(int64_t res,size_t data_size){
+	uint64_t mask = 1;
+	mask << data_size;
+	mask<< (data_size-1);
+	mask = ~mask;
+	uint64_t temp = (uint64_t)res;
+	temp = temp & mask;
+	temp = temp >> data_size;
+	cpu.eflags.CF = temp!=0;
+	cpu.eflags.OF = temp!=0;
+}
 int64_t alu_imul(int32_t src, int32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
 	return __ref_alu_imul(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+//	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
+//	fflush(stdout);
+//	assert(0);
+	int64_t res =((int64_t)src) * dest;
+	imul_eflags(res,data_size);
+	return res;
 #endif
 }
 
