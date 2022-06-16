@@ -46,7 +46,7 @@ void fpu_test_add()
 		if(!(res_fpu.val == res.val)){
 				printf("me:%x  ",res.val);
 				printf("computer:%x  \n",res_fpu.val);
-		
+		}		
 		assert(res_fpu.val == res.val);
 	}
 	printf("fpu_test_add()  \e[0;32mpass\e[0m\n");
