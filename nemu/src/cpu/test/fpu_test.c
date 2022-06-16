@@ -26,6 +26,7 @@ void fpu_test_add()
 			//printf("float add a = %f, b = %f, ua = %x, ub = %x, res = %x, res_fpu = %x, res = %f, res_fpu = %f\n", a.fval, b.fval, a.val, b.val, res.val, res_fpu.val, res.fval, res_fpu.fval);
 			fflush(stdout);
 				if(!(res_fpu.val == res.val)){
+				printf("a : %x b : %x\n",a.val,b.val);
 				printf("me:%x  ",res.val);
 				printf("computer:%x  \n",res_fpu.val);
 		}
