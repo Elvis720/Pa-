@@ -51,7 +51,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			exp++;
 			//处理粘位
 			sig_grs = sig_grs | sticky;//与操作：跟之前的粘位做
-	-	}
+		}
 
 		if (exp >= 0xff)
 		{
@@ -89,7 +89,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
 		//	fflush(stdout);
 		//	assert(0);
-			overflow = true;
+//			overflow = true;
 			if(sign == 0){
 				return p_zero.val;
 			}
@@ -106,7 +106,7 @@ else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 			/* TODO: shift left */
 			uint64_t sticky = sig_grs & 0x1;
 			sig_grs = sig_grs & 0xFFFFFFFE;//粘位设0
-			sig_grs << 1;
+			sig_grs = sig_grs << 1;
 			exp--; 
 			sig_grs = sig_grs | sticky;
 		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
@@ -165,8 +165,8 @@ else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 
 		if (exp >= 0xff)
 		{
-			/* TODO: assign the number to infinity */i
-			overflow = true;
+			/* TODO: assign the number to infinity */
+//			overflow = true;
 			if(sign == 0){
 				return p_inf.val;
 			}
