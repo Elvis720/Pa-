@@ -55,11 +55,11 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 
 		if (exp >= 0xff)
 		{
-			/* TODO: assign the number to infinity */i
+			/* TODO: assign the number to infinity */
 		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
 		//	fflush(stdout);
 		//	assert(0);
-			overflow = true;
+	//		overflow = true;
 			if(sign == 0){
 			return p_inf.val;
 			}
@@ -161,7 +161,7 @@ else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 			exp++;
 			//处理粘位
 			sig_grs = sig_grs | sticky;//与操作：跟之前的粘位做
-	-	}
+		}
 
 		if (exp >= 0xff)
 		{
