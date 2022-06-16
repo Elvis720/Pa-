@@ -282,7 +282,8 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 //	fflush(stdout);
 //	assert(0);
 //	assert(shift >= 0);
-	shift = fb.exponent - fa.exponent;
+//	shift = fb.exponent - fa.exponent;
+	shift = (fb.exponent == 0? fb.exponent + 1 : fb.exponent) - (fa.exponent == 0? fa.exponent  + 1:fa.exponent);	
 	sig_a = (sig_a << 3); // guard, round, sticky
 	sig_b = (sig_b << 3);
 
