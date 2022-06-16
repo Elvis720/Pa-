@@ -16,18 +16,18 @@ n_zero.exponent = 0;
 n_zero.fraction = 0;
 	
 p_inf.sign = 0;
-p_inf.exponent = 0xFFFFFFFF;
+p_inf.exponent = 0xFF;
 p_inf.fraction = 0;
 
 n_inf.sign = 1;
-n_inf.exponent = 0xFFFFFFFF;
+n_inf.exponent = 0xFF;
 n_inf.fraction = 0;
 
 p_nan.sign = 0;
-p_nan.exponent = 0xFFFFFFFF;
+p_nan.exponent = 0xFF;
 
 n_nan.sign = 1;
-n_nan.exponent = 0xFFFFFFFF;
+n_nan.exponent = 0xFF;
 
 	// normalization
 	bool overflow = false; // true if the result is INFINITY or 0 during normalize
