@@ -44,6 +44,7 @@ void fpu_test_add()
 		res_fpu.val = internal_float_add(b.val, a.val);
 		fflush(stdout);
 		if(!(res_fpu.val == res.val)){
+				printf("a : %x b: %x\n",a.val,b.val);
 				printf("me:%x  ",res.val);
 				printf("computer:%x  \n",res_fpu.val);
 		}		
