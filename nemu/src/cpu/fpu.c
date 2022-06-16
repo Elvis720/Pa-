@@ -22,54 +22,90 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		{
 
 			/* TODO: shift right, pay attention to sticky bit*/
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
-		}
+		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
+		//	fflush(stdout);
+		//	assert(0);
+				//提取原本的粘位
+			uint64_t sticky = sig_grs & 0x1;
+			sig_grs = sig_grs >> 1;
+			exp++;
+			//处理粘位
+			sig_grs = sig_grs | sticky;//与操作：跟之前的粘位做
+	-	}
 
 		if (exp >= 0xff)
 		{
-			/* TODO: assign the number to infinity */
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			/* TODO: assign the number to infinity */i
+		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
+		//	fflush(stdout);
+		//	assert(0);
 			overflow = true;
+			if(sign == 0){
+				return p_zero;
+			}
+			else{
+				return n_zero;
+			}
 		}
 		if (exp == 0)
 		{
 			// we have a denormal here, the exponent is 0, but means 2^-126,
 			// as a result, the significand should shift right once more
 			/* TODO: shift right, pay attention to sticky bit*/
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
-		}
+		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
+		//	fflush(stdout);
+		//	assert(0);
+					//提取原本的粘位
+			uint64_t sticky = sig_grs & 0x1;
+			sig_grs = sig_grs >> 1;
+			//处理粘位
+			sig_grs = sig_grs | sticky;//与操作：跟之前的粘位做
+
+	}
+
 		if (exp < 0)
 		{
 			/* TODO: assign the number to zero */
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
+		//	fflush(stdout);
+		//	assert(0);
 			overflow = true;
+			if(sign == 0){
+				return p_zero;
+			}
+			else{
+				return n_zero;
+			}
 		}
 	}
-	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
+else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 	{
 		// normalize toward left
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
 			/* TODO: shift left */
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			uint64_t sticky = sig_grs & 0x1;
+			sig_grs = sig_grs & 0xFFFFFFFE;//粘位设0
+			sig_grs << 1;
+			exp--; 
+			sig_grs = sig_grs | sticky;
+		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
+		//	fflush(stdout);
+		//	assert(0);
 		}
 		if (exp == 0)
 		{
 			// denormal
 			/* TODO: shift right, pay attention to sticky bit*/
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
+		//	fflush(stdout);
+		//	assert(0);
+					//提取原本的粘位
+			uint64_t sticky = sig_grs & 0x1;
+			sig_grs = sig_grs >> 1;
+			//处理粘位
+			sig_grs = sig_grs | sticky;//与操作：跟之前的粘位做
+
 		}
 	}
 	else if (exp == 0 && sig_grs >> (23 + 3) == 1)
@@ -81,9 +117,75 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	if (!overflow)
 	{
 		/* TODO: round up and remove the GRS bits */
-		printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-		fflush(stdout);
-		assert(0);
+	//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
+	//	fflush(stdout);
+	//	assert(0);
+		uint32_t grs = sig_grs & 0x7;
+		sig_grs = sig_grs >> 3;
+		if(grs > 4){
+			sig_grs++;
+		}
+		else if(grs == 4){
+			if((sig_grs & 0x1) != 0){
+				sig_grs++;
+			}
+		}
+		//	判断是不是规格化
+		if((sig_grs >> 26) > 1){
+				// normalize toward right
+		while ((((sig_grs >> (23 + 3)) > 1) && exp < 0xff) )
+		{
+				//提取原本的粘位
+			uint64_t sticky = sig_grs & 0x1;
+			sig_grs = sig_grs >> 1;
+			exp++;
+			//处理粘位
+			sig_grs = sig_grs | sticky;//与操作：跟之前的粘位做
+	-	}
+
+		if (exp >= 0xff)
+		{
+			/* TODO: assign the number to infinity */i
+			overflow = true;
+			if(sign == 0){
+				return p_zero;
+			}
+			else{
+				return n_zero;
+			}
+		}
+		if (exp == 0)
+		{
+			// we have a denormal here, the exponent is 0, but means 2^-126,
+			// as a result, the significand should shift right once more
+			/* TODO: shift right, pay attention to sticky bit*/
+		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
+		//	fflush(stdout);
+		//	assert(0);
+					//提取原本的粘位
+			uint64_t sticky = sig_grs & 0x1;
+			sig_grs = sig_grs >> 1;
+			//处理粘位
+			sig_grs = sig_grs | sticky;//与操作：跟之前的粘位做
+
+	}
+
+		if (exp < 0)
+		{
+			/* TODO: assign the number to zero */
+		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
+		//	fflush(stdout);
+		//	assert(0);
+			overflow = true;
+			if(sign == 0){
+				return p_zero;
+			}
+			else{
+				return n_zero;
+			}
+		}
+	}
+
 	}
 
 	FLOAT f;
