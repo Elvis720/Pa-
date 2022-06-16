@@ -4,6 +4,9 @@
 FPU fpu;
 // special values
 FLOAT p_zero, n_zero, p_inf, n_inf, p_nan, n_nan;
+// the last three bits of the significand are reserved for the GRS bits
+inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
+{
 p_zero.sign = 0;
 p_zero.exponent = 0;
 p_zero.fraction = 0;
@@ -25,9 +28,6 @@ p_nan.exponent = 0xFFFFFFFF;
 
 n_nan.sign = 1;
 n_nan.exponent = 0xFFFFFFFF;
-// the last three bits of the significand are reserved for the GRS bits
-inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
-{
 
 	// normalization
 	bool overflow = false; // true if the result is INFINITY or 0 during normalize
