@@ -4,7 +4,27 @@
 FPU fpu;
 // special values
 FLOAT p_zero, n_zero, p_inf, n_inf, p_nan, n_nan;
+p_zero.sign = 0;
+p_zero.exponent = 0;
+p_zero.fraction = 0;
+			
+n_zero.sign = 1;
+n_zero.exponent = 0;
+n_zero.fraction = 0;
+	
+p_inf.sign = 0;
+p_inf.exponent = 0xFFFFFFFF;
+p_inf.fraction = 0;
 
+n_inf.sign = 1;
+n_inf.exponent = 0xFFFFFFFF;
+n_inf.fraction = 0;
+
+p_nan.sign = 0;
+p_nan.exponent = 0xFFFFFFFF;
+
+n_nan.sign = 1;
+n_nan.exponent = 0xFFFFFFFF;
 // the last three bits of the significand are reserved for the GRS bits
 inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 {
@@ -41,10 +61,10 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		//	assert(0);
 			overflow = true;
 			if(sign == 0){
-				return p_zero;
+			return p_inf.val;
 			}
 			else{
-				return n_zero;
+			return n_inf.val;
 			}
 		}
 		if (exp == 0)
@@ -71,10 +91,10 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		//	assert(0);
 			overflow = true;
 			if(sign == 0){
-				return p_zero;
+				return p_zero.val;
 			}
 			else{
-				return n_zero;
+				return n_zero.val;
 			}
 		}
 	}
@@ -148,10 +168,10 @@ else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 			/* TODO: assign the number to infinity */i
 			overflow = true;
 			if(sign == 0){
-				return p_zero;
+				return p_inf.val;
 			}
 			else{
-				return n_zero;
+				return n_inf.val;
 			}
 		}
 		if (exp == 0)
@@ -178,16 +198,14 @@ else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		//	assert(0);
 			overflow = true;
 			if(sign == 0){
-				return p_zero;
+				return p_zero.val;
 			}
 			else{
-				return n_zero;
+				return n_zero.val;
 			}
 		}
 	}
-
 	}
-
 	FLOAT f;
 	f.sign = sign;
 	f.exponent = (uint32_t)(exp & 0xff);
