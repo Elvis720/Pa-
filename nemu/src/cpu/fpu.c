@@ -151,60 +151,19 @@ else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 			}
 		}
 		//	判断是不是规格化
-		if((sig_grs >> 26) > 1){
-				// normalize toward right
-		while ((((sig_grs >> (23 + 3)) > 1) && exp < 0xff) )
-		{
-				//提取原本的粘位
-			uint64_t sticky = sig_grs & 0x1;
-			sig_grs = sig_grs >> 1;
-			exp++;
-			//处理粘位
-			sig_grs = sig_grs | sticky;//与操作：跟之前的粘位做
-		}
-
-		if (exp >= 0xff)
-		{
-			/* TODO: assign the number to infinity */
-//			overflow = true;
-			if(sign == 0){
-				return p_inf.val;
+		if((sig_grs >> 24) > 1){
+			if(exp >= 0xff){
+				if(sign)
+				{	return n_inf.val;}
+				else 
+				{ return p_inf.val;}
 			}
-			else{
-				return n_inf.val;
+			else
+			{
+				sig_grs = sig_grs >> 1;
+				exp++;
 			}
 		}
-		if (exp == 0)
-		{
-			// we have a denormal here, the exponent is 0, but means 2^-126,
-			// as a result, the significand should shift right once more
-			/* TODO: shift right, pay attention to sticky bit*/
-		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-		//	fflush(stdout);
-		//	assert(0);
-					//提取原本的粘位
-			uint64_t sticky = sig_grs & 0x1;
-			sig_grs = sig_grs >> 1;
-			//处理粘位
-			sig_grs = sig_grs | sticky;//与操作：跟之前的粘位做
-
-	}
-
-		if (exp < 0)
-		{
-			/* TODO: assign the number to zero */
-		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-		//	fflush(stdout);
-		//	assert(0);
-			overflow = true;
-			if(sign == 0){
-				return p_zero.val;
-			}
-			else{
-				return n_zero.val;
-			}
-		}
-	}
 	}
 	FLOAT f;
 	f.sign = sign;
@@ -319,7 +278,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	}
 
 	uint32_t exp_res = fb.exponent;
-	printf("sign = %x  exp = %x fraction = %x\n",f.sign ,exp_res,sig_res);
+	printf("sign = %x  exp = %x seg = %x\n",f.sign ,exp_res,sig_res);
 	return internal_normalize(f.sign, exp_res, sig_res);
 }
 
