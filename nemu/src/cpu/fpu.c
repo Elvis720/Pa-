@@ -371,7 +371,7 @@ uint32_t internal_float_mul(uint32_t b, uint32_t a)
 //	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
 //	fflush(stdout);
 //	assert(0);
-	exp_res = fa.exponent - fb.exponent + 127 - (shift - 23 - 3); 
+	exp_res = fa.exponent + fb.exponent - 127 +3; 
 	return internal_normalize(f.sign, exp_res, sig_res);
 }
 
