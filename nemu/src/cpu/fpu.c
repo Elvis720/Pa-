@@ -104,11 +104,11 @@ else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
 			/* TODO: shift left */
-			uint64_t sticky = sig_grs & 0x1;
-			sig_grs = sig_grs & 0xFFFFFFFE;//粘位设0
+		//	uint64_t sticky = sig_grs & 0x1;
+		//	sig_grs = sig_grs & 0xFFFFFFFE;//粘位设0
 			sig_grs = sig_grs << 1;
 			exp--; 
-			sig_grs = sig_grs | sticky;
+		//	sig_grs = sig_grs | sticky;
 		//	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
 		//	fflush(stdout);
 		//	assert(0);
@@ -151,7 +151,7 @@ else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 			}
 		}
 		//	判断是不是规格化
-		if((sig_grs >> 24) > 1){
+		if((sig_grs >> 23) > 1){
 			if(exp >= 0xff){
 				if(sign)
 				{	return n_inf.val;}
